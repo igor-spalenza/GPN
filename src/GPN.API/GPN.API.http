@@ -1,0 +1,6 @@
+@GPN.API_HostAddress = http://localhost:5182
+
+GET {{GPN.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
