@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using GPN.Application.Interfaces;
 using GPN.Application.Services;
 using System.Data.SQLite;
+using Microsoft.AspNetCore.Identity;
 
 namespace GPN.Infrastructure.DependencyInjection
 {
@@ -26,7 +27,9 @@ namespace GPN.Infrastructure.DependencyInjection
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IPedidoRepository, PedidoRepository>();
+            services.AddScoped<ProjectDataContext>(provider => { return new ProjectDataContext(connectionString); });
 
+            services.AddScoped<IUserStore<IdentityUser>, CustomUserStore>();
         }
     }
 }
