@@ -7,10 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Context\" />
     <Folder Include="Data\Scripts\" />
-    <Folder Include="Data\Repositories\" />
-    <Folder Include="DependencyInjection\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.10" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GPN.Application\GPN.Application.csproj" />
+    <ProjectReference Include="..\GPN.Domain\GPN.Domain.csproj" />
   </ItemGroup>
 
 </Project>

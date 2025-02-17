@@ -8,15 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\ViewModels\" />
+    <ProjectReference Include="..\GPN.Application\GPN.Application.csproj" />
+    <ProjectReference Include="..\GPN.Domain\GPN.Domain.csproj" />
+    <ProjectReference Include="..\GPN.Infrastructure\GPN.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
