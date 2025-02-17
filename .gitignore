@@ -238,6 +238,7 @@ ClientBin/
 *~
 *.dbmdl
 *.db
+*.db-journal
 *.dbproj.schemaview
 *.jfm
 *.pfx
