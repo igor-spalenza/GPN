@@ -16,9 +16,10 @@ namespace GPN.Web.Controllers
         }
 
         // GET: ClienteController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            var clientes = await _clienteService.GetAllAsync();
+            return View("Index", clientes);
         }
 
         // GET: ClienteController/Details/5

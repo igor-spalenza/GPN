@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace GPN.Infrastructure.Data.Repositories
 {
-    public class CustomUserStore : IUserStore<IdentityUser>, IUserPasswordStore<IdentityUser>
+    public class CustomUserStore : IUserStore<IdentityUser>, IUserPasswordStore<IdentityUser>, IUserEmailStore<IdentityUser>
     {
         private readonly IDbConnection _dbConnection;
 
@@ -124,5 +124,47 @@ namespace GPN.Infrastructure.Data.Repositories
             user.NormalizedUserName = normalizedName;
             return Task.CompletedTask;
         }
+
+        // Métodos da IUserEmailStore
+        public Task<string> GetEmailAsync(IdentityUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.Email);
+        }
+
+        public Task SetEmailAsync(IdentityUser user, string email, CancellationToken cancellationToken)
+        {
+            user.Email = email;
+            return Task.CompletedTask;
+        }
+
+        public Task<string> GetNormalizedEmailAsync(IdentityUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.NormalizedEmail);
+        }
+
+        public Task SetNormalizedEmailAsync(IdentityUser user, string normalizedEmail, CancellationToken cancellationToken)
+        {
+            user.NormalizedEmail = normalizedEmail;
+            return Task.CompletedTask;
+        }
+
+        public async Task SetEmailConfirmedAsync(IdentityUser user, bool confirmed, CancellationToken cancellationToken)
+        {
+            var sql = "UPDATE AspNetUsers SET EmailConfirmed = @EmailConfirmed WHERE Id = @Id";
+            await _dbConnection.ExecuteAsync(sql, new { EmailConfirmed = confirmed, Id = user.Id });
+        }
+
+        public async Task<bool> GetEmailConfirmedAsync(IdentityUser user, CancellationToken cancellationToken)
+        {
+            var sql = "SELECT EmailConfirmed FROM AspNetUsers WHERE Id = @Id";
+            return await _dbConnection.ExecuteScalarAsync<bool>(sql, new { Id = user.Id });
+        }
+
+        public async Task<IdentityUser> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
+        {
+            var sql = "SELECT * FROM AspNetUsers WHERE NormalizedEmail = @NormalizedEmail";
+            return await _dbConnection.QuerySingleOrDefaultAsync<IdentityUser>(sql, new { NormalizedEmail = normalizedEmail });
+        }
+
     }
 }

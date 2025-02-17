@@ -1,8 +1,49 @@
-﻿
+﻿@model IEnumerable<GPN.Application.DTOs.ClienteDto>
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
 
-<h4>Cliente</h4>
+<div>
+    <h4>Cliente</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ClienteId</th>
+                <th>Nome</th>
+                <th>Sobrenome</th>
+                <th>Telefone Principal</th>
+                <th>Data de Cadastro</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var cliente in Model)
+            {
+                <tr id="cliente-@cliente.ClienteId">
+                    <td>@cliente.ClienteId</td>
+                    <td>@cliente.Nome</td>
+                    <td>@cliente.Sobrenome</td>
+                    <td>@cliente.TelefonePrincipal</td>
+                    <td>@cliente.DataCadastro</td>
+                    <td>
+                        <a class="btn btn-light" href="/Cliente/Detalhar/@cliente.ClienteId">
+                        </a>
+
+                        <a class="btn btn-info" href="/Cliente/Editar/@cliente.ClienteId">
+                        </a>
+
+                        <a class="btn btn-danger" @*onclick="DeletarConcurso(@cliente.ClienteId, '@cliente.Nome');"*@>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a href="~/Cliente/Cadastro" class="btn btn-primary">
+        @* <img src="~/Images/add.png" style="height: 1.6rem;" /> Cadastrar Concurso *@
+    </a>
+</div>
