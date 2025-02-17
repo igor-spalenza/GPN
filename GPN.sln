@@ -47,6 +47,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GPN.Web", "src\GPN.Web\GPN.
 		{DFD9B57B-900F-4EBD-82E7-79BD9EC28010} = {DFD9B57B-900F-4EBD-82E7-79BD9EC28010}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{093E7D5A-6C46-4F15-8B50-D41A62E552EB}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
