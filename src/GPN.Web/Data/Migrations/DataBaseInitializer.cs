@@ -40,7 +40,19 @@ namespace GPN.Web.Data
                     PRIMARY KEY(PedidoId AUTOINCREMENT)
                 );";
 
+                var createColaboradorTable = @"
+                CREATE TABLE IF NOT EXISTS Colaborador (
+	                ColaboradorId	INTEGER NOT NULL UNIQUE,
+	                UsuarioId	TEXT NOT NULL UNIQUE,
+	                ClienteIdGoogleContacts	TEXT,
+	                DataCadastro	TEXT NOT NULL,
+	                NomeCompleto	TEXT NOT NULL,
+	                DataNascimento	TEXT,
+	                PRIMARY KEY(ColaboradorId AUTOINCREMENT)
+                );";
+
                 // Executar os comandos para criar as tabelas
+                connection.Execute(createColaboradorTable);
                 connection.Execute(createClienteTable);
                 connection.Execute(createPedidoTable);
             }

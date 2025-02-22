@@ -23,10 +23,20 @@ namespace GPN.Infrastructure.DependencyInjection
             // Configuração do contexto de dados
             services.AddScoped<IDbConnection>(db => new SQLiteConnection(connectionString));
 
+            /*services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders();
+
+            services.AddTransient<IUserStore<IdentityUser>, CustomUserStore>();
+            services.AddTransient<IRoleStore<IdentityRole>, CustomRoleStore>();
+            */
             // Registro dos repositórios
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
+
             services.AddScoped<IPedidoRepository, PedidoRepository>();
+
+            services.AddScoped<CustomUserStore>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<ProjectDataContext>(provider => { return new ProjectDataContext(connectionString); });
 
             services.AddScoped<IUserStore<IdentityUser>, CustomUserStore>();

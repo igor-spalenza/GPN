@@ -1,53 +1,35 @@
-﻿using GPN.Application.DTOs;
-using GPN.Application.Interfaces;
-using GPN.Domain.Entities;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GPN.Web.Controllers
 {
-    public class ClienteController : Controller
+    public class VendaController : Controller
     {
-        private readonly IClienteService _clienteService;
-
-        public ClienteController(IClienteService clienteService)
+        // GET: VendaController
+        public ActionResult Index()
         {
-            _clienteService = clienteService;
+            return View();
         }
 
-        // GET: ClienteController
-        public async Task<ActionResult> Index()
-        {
-            var clientes = await _clienteService.GetAllAsync();
-            return View("Index", clientes);
-        }
-
-        // GET: ClienteController/Details/5
+        // GET: VendaController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: ClienteController/Create
+        // GET: VendaController/Create
         public ActionResult Create()
         {
-            return View("Cadastro");
+            return View();
         }
 
-        // POST: ClienteController/Create
+        // POST: VendaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Cliente cliente)
+        public ActionResult Create(IFormCollection collection)
         {
             try
             {
-                if (cliente.ClienteId == 0)
-                {
-                    var clienteDto = new ClienteCreateDto(cliente);
-                    await _clienteService.AddAsync(clienteDto);
-                    return RedirectToAction(nameof(Index));
-
-                }
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -56,13 +38,13 @@ namespace GPN.Web.Controllers
             }
         }
 
-        // GET: ClienteController/Edit/5
+        // GET: VendaController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: ClienteController/Edit/5
+        // POST: VendaController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -77,13 +59,13 @@ namespace GPN.Web.Controllers
             }
         }
 
-        // GET: ClienteController/Delete/5
+        // GET: VendaController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: ClienteController/Delete/5
+        // POST: VendaController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

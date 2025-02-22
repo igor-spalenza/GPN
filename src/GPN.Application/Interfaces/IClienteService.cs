@@ -11,7 +11,7 @@ namespace GPN.Application.Interfaces
     {
         Task<ClienteDto> GetByIdAsync(int id);
         Task<IEnumerable<ClienteDto>> GetAllAsync();
-        Task AddAsync(ClienteDto clienteDto);
+        Task AddAsync(ClienteCreateDto clienteDto);
         Task UpdateAsync(ClienteDto clienteDto);
         Task DeleteAsync(int id);
     }

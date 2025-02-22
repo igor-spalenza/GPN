@@ -45,14 +45,14 @@ namespace GPN.Application.Services
             });
         }
 
-        public async Task AddAsync(ClienteDto clienteDto)
+        public async Task AddAsync(ClienteCreateDto clienteDto)
         {
             var cliente = new Cliente
             {
                 Nome = clienteDto.Nome,
                 Sobrenome = clienteDto.Sobrenome,
                 TelefonePrincipal = clienteDto.TelefonePrincipal,
-                DataCadastro = DateTime.Now
+                DataCadastro = clienteDto.DataCadastro
             };
             await _clienteRepository.AddAsync(cliente);
         }
