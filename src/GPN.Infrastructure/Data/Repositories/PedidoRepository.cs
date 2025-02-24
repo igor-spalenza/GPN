@@ -22,7 +22,7 @@ namespace GPN.Infrastructure.Data.Repositories
 
         public async Task<Pedido> GetByIdAsync(int id)
         {
-            var sql = "SELECT * FROM Pedido WHERE Id = @Id";
+            var sql = "SELECT * FROM Pedido WHERE PedidoId = @Id";
             return await _dbConnection.QueryFirstOrDefaultAsync<Pedido>(sql, new { Id = id });
         }
 
@@ -35,7 +35,7 @@ namespace GPN.Infrastructure.Data.Repositories
         public async Task AddAsync(Pedido pedido)
         {
             var sql = @"
-                INSERT INTO Pedido (ClienteId, Status, DataPedido)
+                INSERT INTO Pedido (PedidoId, Status, DataPedido)
                 VALUES (@ClienteId, @Status, @DataPedido)";
             await _dbConnection.ExecuteAsync(sql, pedido);
         }
@@ -44,7 +44,7 @@ namespace GPN.Infrastructure.Data.Repositories
         {
             var sql = @"
                 UPDATE Pedido 
-                SET ClienteId = @ClienteId, 
+                SET PedidoId = @PedidoId, 
                     Status = @Status 
                 WHERE Id = @Id";
             await _dbConnection.ExecuteAsync(sql, pedido);

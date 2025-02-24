@@ -3,18 +3,20 @@
 }
 
 <h2>Identificação do Cliente</h2>
-<input type="text" id="buscarCliente" placeholder="Buscar Cliente..." class="border p-2 mb-2 w-full" />
+<input type="text" id="buscarCliente" placeholder="Buscar Cliente..." class="border p-2 mb-2 w-full" /><br />
 <select id="tipoPedido" class="border p-2 mb-2 w-full">
     <option value="encomenda">Encomenda</option>
     <option value="evento">Evento</option>
-</select>
-<button class="bg-green-500 text-white py-2 px-4 rounded" onclick="anotarPedido()">Anotar Pedido</button>
+</select><br />
+<button id="btnAbrirPedido" class="btn btn-primary mb-3" onclick="anotarPedido()">
+    Anotar Pedido
+</button>
 
 <script>
     $("#buscarCliente").autocomplete({
         source: function(request, response) {
             $.ajax({
-                url: "/api/clientes/buscar",
+                url: "GPN.API/Cliente/BuscarClienteNomeTel",
                 data: { termo: request.term },
                 success: function(data) {
                     response(data.map(c => ({ label: c.nome + " - " + c.telefone, value: c.id })));
