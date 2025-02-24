@@ -23,7 +23,7 @@ namespace GPN.Infrastructure.Data.Repositories
 
         public async Task<Cliente> GetByIdAsync(int id)
         {
-            var sql = "SELECT * FROM Cliente WHERE Id = @Id";
+            var sql = "SELECT * FROM Cliente WHERE ClienteId = @Id";
             return await _dbConnection.QueryFirstOrDefaultAsync<Cliente>(sql, new { Id = id });
         }
 
@@ -36,8 +36,8 @@ namespace GPN.Infrastructure.Data.Repositories
         public async Task AddAsync(Cliente cliente)
         {
             var sql = @"
-                INSERT INTO Cliente (Nome, Sobrenome, TelefonePrincipal, DataCadastro)
-                VALUES (@Nome, @Sobrenome, @TelefonePrincipal, @DataCadastro)";
+                INSERT INTO Cliente (Nome, Sobrenome, Cpf, TelefonePrincipal, DataCadastro)
+                VALUES (@Nome, @Sobrenome, @Cpf, @TelefonePrincipal, @DataCadastro)";
             await _dbConnection.ExecuteAsync(sql, cliente);
         }
 
@@ -46,15 +46,16 @@ namespace GPN.Infrastructure.Data.Repositories
             var sql = @"
                 UPDATE Cliente 
                 SET Nome = @Nome, 
-                    Sobrenome = @Sobrenome, 
+                    Sobrenome = @Sobrenome,
+                    Cpf = @Cpf,
                     TelefonePrincipal = @TelefonePrincipal
-                WHERE Id = @Id";
+                WHERE ClienteId = @ClienteId";
             await _dbConnection.ExecuteAsync(sql, cliente);
         }
 
         public async Task DeleteAsync(int id)
         {
-            var sql = "DELETE FROM Cliente WHERE Id = @Id";
+            var sql = "DELETE FROM Cliente WHERE ClienteId = @Id";
             await _dbConnection.ExecuteAsync(sql, new { Id = id });
         }
     }

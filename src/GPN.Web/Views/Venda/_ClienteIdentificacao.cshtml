@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Módulo de Vendas";
+}
+
+<h2>Identificação do Cliente</h2>
+<input type="text" id="buscarCliente" placeholder="Buscar Cliente..." class="border p-2 mb-2 w-full" />
+<select id="tipoPedido" class="border p-2 mb-2 w-full">
+    <option value="encomenda">Encomenda</option>
+    <option value="evento">Evento</option>
+</select>
+<button class="bg-green-500 text-white py-2 px-4 rounded" onclick="anotarPedido()">Anotar Pedido</button>
+
+<script>
+    $("#buscarCliente").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: "/api/clientes/buscar",
+                data: { termo: request.term },
+                success: function(data) {
+                    response(data.map(c => ({ label: c.nome + " - " + c.telefone, value: c.id })));
+                }
+            });
+        },
+        select: function(event, ui) {
+            console.log("Cliente selecionado:", ui.item.value);
+        }
+    });
+</script>

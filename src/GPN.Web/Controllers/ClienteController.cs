@@ -23,9 +23,10 @@ namespace GPN.Web.Controllers
         }
 
         // GET: ClienteController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var cliente = await _clienteService.GetByIdAsync(id);
+            return View(cliente);
         }
 
         // GET: ClienteController/Create
@@ -39,42 +40,56 @@ namespace GPN.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Cliente cliente)
         {
-            try
+            ModelState.Remove("ClienteId");
+            ModelState.Remove("Cpf");
+            if (ModelState.IsValid)
             {
                 if (cliente.ClienteId == 0)
                 {
-                    var clienteDto = new ClienteCreateDto(cliente);
-                    await _clienteService.AddAsync(clienteDto);
-                    return RedirectToAction(nameof(Index));
-
+                    try
+                    {
+                        var clienteDto = new ClienteCreateDto(cliente);
+                        await _clienteService.AddAsync(clienteDto);
+                        return RedirectToAction(nameof(Index));
+                    }
+                    catch
+                    {
+                        return View();
+                    }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(cliente);
         }
 
         // GET: ClienteController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var cliente = await _clienteService.GetByIdAsync(id);
+            return View(cliente);
         }
 
         // POST: ClienteController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(ClienteDto cliente)
         {
-            try
+            ModelState.Remove("ClienteId");
+            ModelState.Remove("Cpf");
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _clienteService.UpdateAsync(cliente);
+                    return RedirectToAction("Details", new { id = cliente.ClienteId });
+                }
+                catch
+                {
+                    return View(cliente);
+                }
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(cliente.ClienteId);
         }
 
         // GET: ClienteController/Delete/5

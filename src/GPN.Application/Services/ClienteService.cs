@@ -27,6 +27,7 @@ namespace GPN.Application.Services
                 ClienteId = cliente.ClienteId,
                 Nome = cliente.Nome,
                 Sobrenome = cliente.Sobrenome,
+                Cpf = cliente.Cpf,
                 TelefonePrincipal = cliente.TelefonePrincipal,
                 DataCadastro = cliente.DataCadastro
             };
@@ -40,6 +41,7 @@ namespace GPN.Application.Services
                 ClienteId = c.ClienteId,
                 Nome = c.Nome,
                 Sobrenome = c.Sobrenome,
+                Cpf = c.Cpf,
                 TelefonePrincipal = c.TelefonePrincipal,
                 DataCadastro = c.DataCadastro
             });
@@ -51,6 +53,7 @@ namespace GPN.Application.Services
             {
                 Nome = clienteDto.Nome,
                 Sobrenome = clienteDto.Sobrenome,
+                Cpf = clienteDto.Cpf,
                 TelefonePrincipal = clienteDto.TelefonePrincipal,
                 DataCadastro = clienteDto.DataCadastro
             };
@@ -64,6 +67,7 @@ namespace GPN.Application.Services
                 ClienteId = clienteDto.ClienteId,
                 Nome = clienteDto.Nome,
                 Sobrenome = clienteDto.Sobrenome,
+                Cpf = clienteDto.Cpf,
                 TelefonePrincipal = clienteDto.TelefonePrincipal,
             };
             await _clienteRepository.UpdateAsync(cliente);

@@ -1,14 +1,34 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using GPN.Application.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GPN.Web.Controllers
 {
     public class VendaController : Controller
     {
-        // GET: VendaController
-        public ActionResult Index()
+        private readonly IPedidoService _pedidoService;
+
+        public VendaController(IPedidoService pedidoService)
         {
-            return View();
+            _pedidoService = pedidoService;
+        }
+        // GET: VendaController
+        public async Task<ActionResult> Index()
+        {
+            var pedidos = await _pedidoService.GetAllAsync();
+            return View("Index", pedidos);
+        }
+
+        // Action para a Etapa 1 de criação do Pedido
+        public IActionResult NovoPedido()
+        {
+            return PartialView("_ClienteIdentificacao");
+        }
+
+        // Action para carregar um Pedido existente
+        public IActionResult CarregarPedido(int id)
+        {
+            return PartialView("_PedidoDetalhes", id);
         }
 
         // GET: VendaController/Details/5

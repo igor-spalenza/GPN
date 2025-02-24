@@ -1,8 +1,122 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<GPN.Application.DTOs.PedidoViewIndexDto>
 @{
-    ViewData["Title"] = "Início - Vendas";
+    ViewData["Title"] = "Módulo de Vendas";
 }
 
-<h1>Início - Vendas</h1>
+<div class="container mt-4">
+    <div width="20%">
+        <h1>Workspace de Vendas</h1>
+        <button id="btnAbrirPedido" class="btn btn-primary mb-3" onclick="abrirNovoPedido()">
+            Criar Novo Pedido
+        </button>
+        <h2 class="text-lg font-semibold mb-2">Lembretes</h2>
+        <p class="text-sm">Sem lembretes no momento.</p>
+    </div>
+
+    <div width="80%">
+        <!-- Abas Dinâmicas -->
+        <ul class="nav nav-tabs" id="pedidoTabs" role="tablist"></ul>
+
+        <!-- Conteúdo das Abas -->
+        <div class="tab-content" id="pedidoTabsContent">
+            <div class="tab-pane fade active show" id="main" role="tabpanel">
+                <h2>Pedidos dos Próximos 3 Dias</h2>
+                <p>Tá saindo da jaula o monstro mulecote, marcha.</p>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>PedidoId</th>
+                            <th>ClienteId</th>
+                            <th>Data de Criação</th>
+                            <th>Data do Pedido</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var pedido in Model)
+                        {
+                            <tr id="pedido-@pedido.PedidoId">
+                                <td>@pedido.PedidoId</td>
+                                <td>@pedido.ClienteId</td>
+                                <td>@pedido.DataCadastro</td>
+                                <td>@pedido.DataPedido</td>
+                                <td>
+                                    <a class="btn btn-light" href="/Cliente/Details/@pedido.PedidoId">
+                                        Visualizar Cliente
+                                    </a>
+
+                                    <a class="btn btn-info" href="/Cliente/Edit/@pedido.PedidoId">
+                                        Editar Cliente
+                                    </a>
+
+                                    <a class="btn btn-danger">
+                                        Deletar Cliente
+                                        @*onclick="DeletarConcurso(@cliente.ClienteId, '@pedido.PedidoId');"*@
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let abaContador = 0;
+
+    document.getElementById('btnAbrirPedido').addEventListener('click', () => {
+        abaContador++;
+        const pedidoId = `pedido${abaContador}`;
+
+        // Criar a aba
+        const novaAba = `
+            <li class="nav-item" role="presentation">
+                <button class="nav-link ${abaContador === 1 ? 'active' : ''}"
+                        id="${pedidoId}-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#${pedidoId}"
+                        type="button"
+                        role="tab">
+                    Pedido ${abaContador}
+                    <span class="btn-close ms-2" onclick="fecharAba('${pedidoId}')"></span>
+                </button>
+            </li>`;
+        document.getElementById('pedidoTabs').insertAdjacentHTML('beforeend', novaAba);
+
+        // Criar o conteúdo da aba
+        const novoConteudo = `
+            <div class="tab-pane fade ${abaContador === 1 ? 'show active' : ''}"
+                 id="${pedidoId}"
+                 role="tabpanel">
+                <h4>Conteúdo do Pedido ${abaContador}</h4>
+                <p>Aqui vão os detalhes do pedido ${abaContador}.</p>
+            </div>`;
+        document.getElementById('pedidoTabsContent').insertAdjacentHTML('beforeend', novoConteudo);
+
+        // Ativar a nova aba automaticamente
+        const tabTrigger = new bootstrap.Tab(document.getElementById(`${pedidoId}-tab`));
+        tabTrigger.show();
+    });
+
+    function fecharAba(pedidoId) {
+        const aba = document.getElementById(`${pedidoId}-tab`);
+        const conteudo = document.getElementById(pedidoId);
+
+        // Remover aba e conteúdo
+        aba.remove();
+        conteudo.remove();
+
+        // Ativar a aba anterior (caso exista)
+        const abasRestantes = document.querySelectorAll('#pedidoTabs button');
+        if (abasRestantes.length > 0) {
+            const tabTrigger = new bootstrap.Tab(abasRestantes[abasRestantes.length - 1]);
+            tabTrigger.show();
+        }
+    }
+</script>

@@ -12,6 +12,7 @@ namespace GPN.Domain.Entities
         public int ClienteId { get; private set; }
         public string DataPedido { get; private set; }
         public DateTime DataCadastro { get; private set; }
+        public DateTime DataModificacao { get; set; }
 
     }
 }
