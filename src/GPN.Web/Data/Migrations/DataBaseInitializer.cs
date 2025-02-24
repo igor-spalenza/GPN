@@ -28,6 +28,7 @@ namespace GPN.Web.Data
                     Sobrenome TEXT NOT NULL,
                     Cpf TEXT,
                     TelefonePrincipal INTEGER NOT NULL,
+                    DataModificacao TEXT NOT NULL,
                     PRIMARY KEY(ClienteId AUTOINCREMENT)
                 );";
 
@@ -35,9 +36,11 @@ namespace GPN.Web.Data
                 CREATE TABLE IF NOT EXISTS Pedido (
                     PedidoId INTEGER NOT NULL UNIQUE,
                     ClienteId INTEGER NOT NULL,
-                    DataCadastro TEXT NOT NULL,
-                    DataPedido TEXT NOT NULL,
-                    PRIMARY KEY(PedidoId AUTOINCREMENT)
+	                ColaboradorId INTEGER NOT NULL,
+	                DataCadastro TEXT NOT NULL,
+	                DataPedido TEXT NOT NULL,
+	                DataModificacao	TEXT NOT NULL,
+	                PRIMARY KEY(PedidoId AUTOINCREMENT)
                 );";
 
                 var createColaboradorTable = @"

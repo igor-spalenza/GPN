@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GPN.Application.DTOs.PedidoViewIndexDto>
+﻿@model IEnumerable<GPN.Application.DTOs.PedidoIndexVendasDto>
 @{
     ViewData["Title"] = "Módulo de Vendas";
 }
@@ -6,8 +6,11 @@
 <div class="container mt-4">
     <div width="20%">
         <h1>Workspace de Vendas</h1>
-        <button id="btnAbrirPedido" class="btn btn-primary mb-3">
+        <button id="btnAbrirPedido" class="btn btn-sales mb-3">
             Criar Novo Pedido
+        </button><br />
+        <button id="btnHomeVendas" class="btn btn-sales mb-3">
+            Início
         </button>
         <h2 class="text-lg font-semibold mb-2">Lembretes</h2>
         <p class="text-sm">Sem lembretes no momento.</p>
@@ -76,7 +79,7 @@ document.getElementById('btnAbrirPedido').addEventListener('click', () => {
     // Criar a aba dinamicamente
     const novaAba = `
         <li class="nav-item" role="presentation">
-            <button class="nav-link ${abaContador === 1 ? 'active' : ''}"
+            <button class="nav-link"
                     id="${pedidoId}-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#${pedidoId}"
@@ -113,6 +116,21 @@ document.getElementById('btnAbrirPedido').addEventListener('click', () => {
     tabTrigger.show();
 });
 
+document.getElementById('btnHomeVendas').addEventListener('click', () => {
+    // 1. Remover as classes "active" e "show" de todas as abas ativas
+    document.querySelectorAll('.tab-pane.active, .nav-link.active').forEach(element => {
+        element.classList.remove('active', 'show');
+    });
+
+    // 2. Adicionar as classes "active" e "show" à aba principal
+    const mainTab = document.getElementById('main-tab');
+    mainTab.classList.add('active', 'show');
+
+    // 3. Ativar a aba principal usando o Bootstrap Tab
+    const tabTrigger = new bootstrap.Tab(document.querySelector('[data-bs-target="#main-tab"]'));
+    tabTrigger.show();
+});
+
 function fecharAba(pedidoId) {
     const aba = document.getElementById(`${pedidoId}-tab`);
     const conteudo = document.getElementById(pedidoId);
@@ -121,14 +139,14 @@ function fecharAba(pedidoId) {
     conteudo.remove();
 
     // Voltar para a aba principal se não houver mais abas abertas
-    const abasRestantes = document.querySelectorAll('#pedidoTabsContent .main-div');
+    const abasRestantes = document.querySelectorAll('#pedidoTabsContent .nav-link:not(#main-tab)');
     if (abasRestantes.length > 1) {
         const tabTrigger = new bootstrap.Tab(abasRestantes[abasRestantes.length - 1]);
         tabTrigger.show();
     } else {
-        const tabTrigger = document.getElementById('main-tab');
-        tabTrigger.innerText("PASSEI AQUI");
+        const tabTrigger = new bootstrap.Tab(document.getElementById('main-tab'));
         tabTrigger.show();
+        document.getElementById('main-tab').classList.add("active show");
     }
 }
 </script>

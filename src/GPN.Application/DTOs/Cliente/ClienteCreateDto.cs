@@ -23,6 +23,9 @@ namespace GPN.Application.DTOs
         [Display(Name = "Data de Criação")]
         public DateTime DataCadastro { get; set; }
 
+        [Display(Name = "Data de Modificação")]
+        public DateTime DataModificacao { get; set; }
+
         public ClienteCreateDto()
         {
 
@@ -35,6 +38,7 @@ namespace GPN.Application.DTOs
             Cpf = cliente.Cpf;
             TelefonePrincipal = cliente.TelefonePrincipal;
             DataCadastro = DateTime.Now;
+            DataModificacao = DateTime.Now;
         }
     }
 }

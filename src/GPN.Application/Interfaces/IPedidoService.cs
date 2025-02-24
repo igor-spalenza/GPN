@@ -10,7 +10,7 @@ namespace GPN.Application.Interfaces
     public interface IPedidoService
     {
         Task<PedidoDto> GetByIdAsync(int id);
-        Task<IEnumerable<PedidoViewIndexDto>> GetAllAsync();
+        Task<IEnumerable<PedidoIndexVendasDto>> GetAllAsync();
         Task AddAsync(PedidoCreateDto clienteDto);
         Task UpdateAsync(PedidoUpdateDto clienteDto);
         Task DeleteAsync(int id);

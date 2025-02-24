@@ -1,4 +1,5 @@
-﻿using GPN.Application.Interfaces;
+﻿using GPN.Application.DTOs;
+using GPN.Application.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,9 +8,11 @@ namespace GPN.Web.Controllers
     public class VendaController : Controller
     {
         private readonly IPedidoService _pedidoService;
+        private readonly IClienteService _clienteService;
 
-        public VendaController(IPedidoService pedidoService)
+        public VendaController(IPedidoService pedidoService, IClienteService clienteService)
         {
+            _clienteService = clienteService;
             _pedidoService = pedidoService;
         }
         // GET: VendaController
@@ -23,6 +26,17 @@ namespace GPN.Web.Controllers
         public IActionResult NovoPedido()
         {
             return PartialView("_ClienteIdentificacao");
+        }
+
+        // Action para a Etapa 2 de criação do Pedido
+        public async Task<IActionResult> AnotarPedido(int idCliente)
+        {
+            var cliente = await _clienteService.GetByIdAsync(1);
+            var pedido = new PedidoCreateDto
+            {
+                ClienteId = cliente.ClienteId
+            };
+            return PartialView("_PedidoCriacao", pedido);
         }
 
         // Action para carregar um Pedido existente

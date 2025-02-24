@@ -23,6 +23,9 @@ namespace GPN.Application.DTOs
         [Display(Name = "Data de Criação")]
         public DateTime DataCadastro { get; set; }
 
+        [Display(Name = "Data de Modificação")]
+        public DateTime DataModificacao { get; set; }
+
         public ClienteDto()
         {
 

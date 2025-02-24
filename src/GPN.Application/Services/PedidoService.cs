@@ -41,10 +41,10 @@ namespace GPN.Application.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<PedidoViewIndexDto>> GetAllAsync()
+        public async Task<IEnumerable<PedidoIndexVendasDto>> GetAllAsync()
         {
             var pedidos = await _pedidoRepository.GetAllAsync();
-            return pedidos.Select(p => new PedidoViewIndexDto 
+            return pedidos.Select(p => new PedidoIndexVendasDto
             {
                 PedidoId = p.PedidoId,
                 ClienteId= p.ClienteId,

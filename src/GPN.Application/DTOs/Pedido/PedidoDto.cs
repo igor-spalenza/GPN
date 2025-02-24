@@ -9,11 +9,12 @@ namespace GPN.Application.DTOs
 {
     public class PedidoDto
     {
-        public int PedidoId { get; set; }
-        public int ClienteId { get; set; }
+        public string PedidoId { get; set; }
+        public string ClienteId { get; set; }
+        public string ColaboradorId { get; set; }
 
         [Display(Name = "Data do Pedido")]
-        public string DataPedido { get; set; }
+        public DateTime DataPedido { get; set; }
 
         [Display(Name = "Data de Criação")]
         public DateTime DataCadastro { get; set; }
