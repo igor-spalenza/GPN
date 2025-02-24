@@ -67,56 +67,67 @@
 
 </div>
 
-<script>
-    let abaContador = 0;
+<script>let abaContador = 0;
 
-    document.getElementById('btnAbrirPedido').addEventListener('click', () => {
-        abaContador++;
-        const pedidoId = `pedido${abaContador}`;
+document.getElementById('btnAbrirPedido').addEventListener('click', () => {
+    abaContador++;
+    const pedidoId = `pedido${abaContador}`;
 
-        // Criar a aba
-        const novaAba = `
-            <li class="nav-item" role="presentation">
-                <button class="nav-link ${abaContador === 1 ? 'active' : ''}"
-                        id="${pedidoId}-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#${pedidoId}"
-                        type="button"
-                        role="tab">
-                    Pedido ${abaContador}
-                    <span class="btn-close ms-2" onclick="fecharAba('${pedidoId}')"></span>
-                </button>
-            </li>`;
-        document.getElementById('pedidoTabs').insertAdjacentHTML('beforeend', novaAba);
+    // Criar a aba dinamicamente
+    const novaAba = `
+        <li class="nav-item" role="presentation">
+            <button class="nav-link ${abaContador === 1 ? 'active' : ''}"
+                    id="${pedidoId}-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#${pedidoId}"
+                    type="button"
+                    role="tab">
+                Novo Pedido
+                <span class="btn-close ms-2" onclick="fecharAba('${pedidoId}')"></span>
+            </button>
+        </li>`;
+    document.getElementById('pedidoTabs').insertAdjacentHTML('beforeend', novaAba);
 
-        // Criar o conteúdo da aba
-        const novoConteudo = `
-            <div class="tab-pane fade ${abaContador === 1 ? 'show active' : ''}"
-                 id="${pedidoId}"
-                 role="tabpanel">
-                <h4>Conteúdo do Pedido ${abaContador}</h4>
-                <p>Aqui vão os detalhes do pedido ${abaContador}.</p>
-            </div>`;
-        document.getElementById('pedidoTabsContent').insertAdjacentHTML('beforeend', novoConteudo);
+    // Criar o conteúdo da aba e carregar a Partial View via AJAX
+    const novoConteudo = `
+        <div class="tab-pane fade ${abaContador === 1 ? 'show active' : ''}"
+             id="${pedidoId}"
+             role="tabpanel">
+            <div id="conteudo-${pedidoId}">Carregando...</div>
+        </div>`;
+    document.getElementById('pedidoTabsContent').insertAdjacentHTML('beforeend', novoConteudo);
 
-        // Ativar a nova aba automaticamente
-        const tabTrigger = new bootstrap.Tab(document.getElementById(`${pedidoId}-tab`));
+    // Chamada AJAX para buscar a Partial View
+    fetch('/Venda/NovoPedido')
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById(`conteudo-${pedidoId}`).innerHTML = html;
+        })
+        .catch(error => {
+            document.getElementById(`conteudo-${pedidoId}`).innerHTML = '<p>Erro ao carregar o pedido.</p>';
+            console.error('Erro ao carregar a partial view:', error);
+        });
+
+    // Ativar a nova aba automaticamente
+    const tabTrigger = new bootstrap.Tab(document.getElementById(`${pedidoId}-tab`));
+    tabTrigger.show();
+});
+
+function fecharAba(pedidoId) {
+    const aba = document.getElementById(`${pedidoId}-tab`);
+    const conteudo = document.getElementById(pedidoId);
+
+    aba.remove();
+    conteudo.remove();
+
+    // Voltar para a aba principal se não houver mais abas abertas
+    const abasRestantes = document.querySelectorAll('#pedidoTabs button');
+    if (abasRestantes.length > 0) {
+        const tabTrigger = new bootstrap.Tab(abasRestantes[abasRestantes.length - 1]);
         tabTrigger.show();
-    });
-
-    function fecharAba(pedidoId) {
-        const aba = document.getElementById(`${pedidoId}-tab`);
-        const conteudo = document.getElementById(pedidoId);
-
-        // Remover aba e conteúdo
-        aba.remove();
-        conteudo.remove();
-
-        // Ativar a aba anterior (caso exista)
-        const abasRestantes = document.querySelectorAll('#pedidoTabs button');
-        if (abasRestantes.length > 0) {
-            const tabTrigger = new bootstrap.Tab(abasRestantes[abasRestantes.length - 1]);
-            tabTrigger.show();
-        }
+    } else {
+        const tabTrigger = new bootstrap.Tab(document.getElementById('main-tab'));
+        tabTrigger.show();
     }
+}
 </script>
