@@ -3,20 +3,20 @@
     ViewData["Title"] = "Módulo de Vendas";
 }
 
-<div class="container mt-4">
-    <div width="20%">
-        <h1>Workspace de Vendas</h1>
+<div class="venda-main">
+    <div class="venda-lateral-fixa">
+        <h3>Workspace de Vendas</h3>
+
+        <img class="tela-inicial" id="btnHomeVendas" src="~/img/inicio-icon.png" alt="Ícone de redirecionamento para a tela inicial" />
+        <br /><br />
         <button id="btnAbrirPedido" class="btn btn-sales mb-3">
             Criar Novo Pedido
-        </button><br />
-        <button id="btnHomeVendas" class="btn btn-sales mb-3">
-            Início
         </button>
-        <h2 class="text-lg font-semibold mb-2">Lembretes</h2>
+        <h3 class="text-lg font-semibold mb-2">Lembretes</h3>
         <p class="text-sm">Sem lembretes no momento.</p>
     </div>
 
-    <div width="80%">
+    <div class="venda-conteudo-dinamico">
         <!-- Abas Dinâmicas -->
         <ul class="nav nav-tabs" id="pedidoTabs" role="tablist"></ul>
 

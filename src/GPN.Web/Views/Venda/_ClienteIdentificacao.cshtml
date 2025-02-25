@@ -2,13 +2,17 @@
     ViewData["Title"] = "Módulo de Vendas";
 }
 
-<h2>Identificação do Cliente</h2>
-<input type="text" id="buscarCliente" placeholder="Buscar Cliente..." class="border p-2 mb-2 w-full" /><br />
-<select id="tipoPedido" class="border p-2 mb-2 w-full">
-    <option value="encomenda">Encomenda</option>
-    <option value="evento">Evento</option>
-</select><br />
-<a class="btn btn-sales mb-3" href="/Venda/AnotarPedido/">Anotar Pedido</a>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Identificação do Cliente</h2>
+        <input type="text" id="buscarCliente" placeholder="Buscar Cliente..." class="border p-2 mb-2 w-full" /><br />
+        <select id="tipoPedido" class="border p-2 mb-2 w-full">
+            <option value="encomenda">Encomenda</option>
+            <option value="evento">Evento</option>
+        </select><br />
+        <a class="btn btn-sales mb-3" id="btnAnotarPedido">Anotar Pedido</a>
+    </div>
+</div>
 
 <script>
     $("#buscarCliente").autocomplete({
@@ -24,5 +28,25 @@
         select: function(event, ui) {
             console.log("Cliente selecionado:", ui.item.value);
         }
+    });
+    document.getElementById('btnAnotarPedido').addEventListener('click', function () {
+        // Obter o ID do cliente (você pode precisar ajustar isso conforme sua lógica)
+        var idCliente = 1; // Substitua pelo ID real do cliente que você deseja usar
+        console.log("deu bom");
+        // Fazer a requisição AJAX para a action AnotarPedido
+        fetch(`/Venda/AnotarPedido?idCliente=${idCliente}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(html => {
+                // Substituir o conteúdo da div com a nova partial view
+                document.querySelector('.row').innerHTML = html; // Ajuste o seletor conforme necessário
+            })
+            .catch(error => {
+                console.error('Erro ao carregar a partial view:', error);
+            });
     });
 </script>
