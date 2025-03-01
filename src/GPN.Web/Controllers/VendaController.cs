@@ -25,11 +25,10 @@ namespace GPN.Web.Controllers
         // Action para a Etapa 1 de criação do Pedido
         public IActionResult NovoPedido()
         {
-            return PartialView("_ClienteIdentificacao");
+            return PartialView("_PedidoCriacao");
         }
 
-        // Action para a Etapa 2 de criação do Pedido
-        public async Task<IActionResult> AnotarPedido(int idCliente)
+        /*public async Task<IActionResult> AnotarPedido(int idCliente)
         {
             var cliente = await _clienteService.GetByIdAsync(1);
             var pedido = new PedidoCreateDto
@@ -38,17 +37,13 @@ namespace GPN.Web.Controllers
             };
             return PartialView("_PedidoCriacao", pedido);
         }
-
-        // Action para carregar um Pedido existente
-        public IActionResult CarregarPedido(int id)
-        {
-            return PartialView("_PedidoDetalhes", id);
-        }
+        */
 
         // GET: VendaController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var pedido = await _pedidoService.GetByIdAsync(id);
+            return View("_Details", pedido);
         }
 
         // GET: VendaController/Create
@@ -60,7 +55,7 @@ namespace GPN.Web.Controllers
         // POST: VendaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(PedidoCreateDto pedidoCreateDto)
         {
             try
             {
@@ -73,9 +68,17 @@ namespace GPN.Web.Controllers
         }
 
         // GET: VendaController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var pedido = await _pedidoService.GetByIdAsync(id);
+            return View("_Edit", pedido);
+        }
+
+        // GET: VendaController/Edit/5
+        public async Task<ActionResult> EditPartial(int id)
+        {
+            var pedido = await _pedidoService.GetByIdAsync(id);
+            return PartialView("_Edit", pedido);
         }
 
         // POST: VendaController/Edit/5

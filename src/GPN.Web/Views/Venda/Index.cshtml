@@ -29,8 +29,8 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>PedidoId</th>
-                            <th>ClienteId</th>
+                            <th>Pedido Id</th>
+                            <th>Cliente Id</th>
                             <th>Data de Criação</th>
                             <th>Data do Pedido</th>
                             <th></th>
@@ -46,16 +46,16 @@
                                 <td>@pedido.DataCadastro</td>
                                 <td>@pedido.DataPedido</td>
                                 <td>
-                                    <a class="btn btn-light" href="/Cliente/Details/@pedido.PedidoId">
-                                        Visualizar Cliente
+                                    <a class="btn btn-light" href="/Venda/Details/@pedido.PedidoId">
+                                        Ver Pedido
                                     </a>
 
-                                    <a class="btn btn-info" href="/Cliente/Edit/@pedido.PedidoId">
-                                        Editar Cliente
+                                    <a class="btn btn-info" onclick="EditarPedido(@pedido.PedidoId)" @*href="/Venda/Edit/@pedido.PedidoId"*@>
+                                        Editar Pedido
                                     </a>
 
                                     <a class="btn btn-danger">
-                                        Deletar Cliente
+                                        Deletar Pedido
                                         @*onclick="DeletarConcurso(@cliente.ClienteId, '@pedido.PedidoId');"*@
                                     </a>
                                 </td>
@@ -70,83 +70,11 @@
 
 </div>
 
-<script>let abaContador = 1;
+<script src="~/js/venda.js" asp-append-version="true"></script>
 
-document.getElementById('btnAbrirPedido').addEventListener('click', () => {
-    abaContador++;
-    const pedidoId = `pedido${abaContador}`;
+<script>
 
-    // Criar a aba dinamicamente
-    const novaAba = `
-        <li class="nav-item" role="presentation">
-            <button class="nav-link"
-                    id="${pedidoId}-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#${pedidoId}"
-                    type="button"
-                    role="tab">
-                Novo Pedido
-                <span class="btn-close ms-2" onclick="fecharAba('${pedidoId}')"></span>
-            </button>
-        </li>`;
-    document.getElementById('pedidoTabs').insertAdjacentHTML('beforeend', novaAba);
-
-    // Criar o conteúdo da aba e carregar a Partial View via AJAX
-    const novoConteudo = `
-        <div class="main-div tab-pane fade ${abaContador === 1 ? 'show active' : ''}"
-             id="${pedidoId}"
-             role="tabpanel">
-            <div id="conteudo-${pedidoId}">Carregando...</div>
-        </div>`;
-    document.getElementById('pedidoTabsContent').insertAdjacentHTML('beforeend', novoConteudo);
-
-    // Chamada AJAX para buscar a Partial View
-    fetch('/Venda/NovoPedido')
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById(`conteudo-${pedidoId}`).innerHTML = html;
-        })
-        .catch(error => {
-            document.getElementById(`conteudo-${pedidoId}`).innerHTML = '<p>Erro ao carregar o pedido.</p>';
-            console.error('Erro ao carregar a partial view:', error);
-        });
-
-    // Ativar a nova aba automaticamente
-    const tabTrigger = new bootstrap.Tab(document.getElementById(`${pedidoId}-tab`));
-    tabTrigger.show();
-});
-
-document.getElementById('btnHomeVendas').addEventListener('click', () => {
-    // 1. Remover as classes "active" e "show" de todas as abas ativas
-    document.querySelectorAll('.tab-pane.active, .nav-link.active').forEach(element => {
-        element.classList.remove('active', 'show');
-    });
-
-    // 2. Adicionar as classes "active" e "show" à aba principal
-    const mainTab = document.getElementById('main-tab');
-    mainTab.classList.add('active', 'show');
-
-    // 3. Ativar a aba principal usando o Bootstrap Tab
-    const tabTrigger = new bootstrap.Tab(document.querySelector('[data-bs-target="#main-tab"]'));
-    tabTrigger.show();
-});
-
-function fecharAba(pedidoId) {
-    const aba = document.getElementById(`${pedidoId}-tab`);
-    const conteudo = document.getElementById(pedidoId);
-
-    aba.remove();
-    conteudo.remove();
-
-    // Voltar para a aba principal se não houver mais abas abertas
-    const abasRestantes = document.querySelectorAll('#pedidoTabsContent .nav-link:not(#main-tab)');
-    if (abasRestantes.length > 1) {
-        const tabTrigger = new bootstrap.Tab(abasRestantes[abasRestantes.length - 1]);
-        tabTrigger.show();
-    } else {
-        const tabTrigger = new bootstrap.Tab(document.getElementById('main-tab'));
-        tabTrigger.show();
-        document.getElementById('main-tab').classList.add("active show");
-    }
+function abrirEtapaDois() {
+    console.log("deu bom!");
 }
 </script>
