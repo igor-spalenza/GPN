@@ -1,20 +1,49 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using GPN.Application.DTOs;
+using GPN.Application.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GPN.Web.Controllers
 {
     public class VendaController : Controller
     {
-        // GET: VendaController
-        public ActionResult Index()
+        private readonly IPedidoService _pedidoService;
+        private readonly IClienteService _clienteService;
+
+        public VendaController(IPedidoService pedidoService, IClienteService clienteService)
         {
-            return View();
+            _clienteService = clienteService;
+            _pedidoService = pedidoService;
+        }
+        // GET: VendaController
+        public async Task<ActionResult> Index()
+        {
+            var pedidos = await _pedidoService.GetAllAsync();
+            return View("Index", pedidos);
         }
 
-        // GET: VendaController/Details/5
-        public ActionResult Details(int id)
+        // Action para a Etapa 1 de criação do Pedido
+        public IActionResult NovoPedido()
         {
-            return View();
+            return PartialView("_PedidoCriacao");
+        }
+
+        /*public async Task<IActionResult> AnotarPedido(int idCliente)
+        {
+            var cliente = await _clienteService.GetByIdAsync(1);
+            var pedido = new PedidoCreateDto
+            {
+                ClienteId = cliente.ClienteId
+            };
+            return PartialView("_PedidoCriacao", pedido);
+        }
+        */
+
+        // GET: VendaController/Details/5
+        public async Task<ActionResult> Details(int id)
+        {
+            var pedido = await _pedidoService.GetByIdAsync(id);
+            return View("_Details", pedido);
         }
 
         // GET: VendaController/Create
@@ -26,7 +55,7 @@ namespace GPN.Web.Controllers
         // POST: VendaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(PedidoCreateDto pedidoCreateDto)
         {
             try
             {
@@ -39,9 +68,17 @@ namespace GPN.Web.Controllers
         }
 
         // GET: VendaController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var pedido = await _pedidoService.GetByIdAsync(id);
+            return View("_Edit", pedido);
+        }
+
+        // GET: VendaController/Edit/5
+        public async Task<ActionResult> EditPartial(int id)
+        {
+            var pedido = await _pedidoService.GetByIdAsync(id);
+            return PartialView("_Edit", pedido);
         }
 
         // POST: VendaController/Edit/5

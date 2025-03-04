@@ -33,6 +33,7 @@ namespace GPN.Infrastructure.DependencyInjection
             services.AddScoped<IClienteRepository, ClienteRepository>();
 
             services.AddScoped<IPedidoRepository, PedidoRepository>();
+            services.AddScoped<IPedidoService, PedidoService>();
 
             services.AddScoped<CustomUserStore>();
             services.AddScoped<IUserRepository, UserRepository>();

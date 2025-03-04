@@ -1,0 +1,86 @@
+﻿@model GPN.Application.DTOs.PedidoCreateDto
+@{
+    ViewData["Title"] = "Módulo de Vendas";
+}
+
+<div class="row">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Identificação do Cliente</h2>
+            <input type="text" id="buscarCliente" placeholder="Buscar Cliente..." class="border p-2 mb-2 w-full" /><br />
+            <select id="tipoPedido" class="border p-2 mb-2 w-full">
+                <option value="encomenda">Encomenda</option>
+                <option value="evento">Evento</option>
+            </select><br />
+            <button class="btn btn-sales mb-3" id="btnAnotarPedido">Anotar Pedido</button>
+        </div>
+    </div>
+    <h4>PedidoCreateDto</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="_PedidoCriacao">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="PedidoId" class="control-label"></label>
+                    <input asp-for="PedidoId" class="form-control" />
+                    <span asp-validation-for="PedidoId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ClienteId" class="control-label"></label>
+                    <input asp-for="ClienteId" class="form-control" />
+                    <span asp-validation-for="ClienteId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ColaboradorId" class="control-label"></label>
+                    <input asp-for="ColaboradorId" class="form-control" />
+                    <span asp-validation-for="ColaboradorId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DataPedido" class="control-label"></label>
+                    <input asp-for="DataPedido" class="form-control" />
+                    <span asp-validation-for="DataPedido" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DataCadastro" class="control-label"></label>
+                    <input asp-for="DataCadastro" class="form-control" />
+                    <span asp-validation-for="DataCadastro" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DataModificacao" class="control-label"></label>
+                    <input asp-for="DataModificacao" class="form-control" />
+                    <span asp-validation-for="DataModificacao" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Salvar" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+<script>
+    /*$("#buscarCliente").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: "GPN.API/Cliente/BuscarClienteNomeTel",
+                data: { termo: request.term },
+                success: function(data) {
+                    response(data.map(c => ({ label: c.nome + " - " + c.telefone, value: c.id })));
+                }
+            });
+        },
+        select: function(event, ui) {
+            console.log("Cliente selecionado:", ui.item.value);
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("btnAnotarPedido").addEventListener("click", () => {
+            alert("deu bom!");
+        });
+    });*/
+</script>

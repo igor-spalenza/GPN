@@ -5,25 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GPN.Domain.Entities
+namespace GPN.Application.DTOs
 {
-    public class Cliente
+    public class PedidoUpdateDto
     {
-        public int ClienteId { get; set; }
-        public string Nome { get; set; }
-        public string Sobrenome { get; set; }
+        public string PedidoId { get; set; }
+        public string ClienteId { get; set; }
+        public string ColaboradorId { get; private set; }
 
-        [Display(Name = "CPF")]
-        public string Cpf { get; set; }
+        [Display(Name = "Data do Pedido")]
+        public DateTime DataPedido { get; set; }
 
-        [Display(Name = "Telefone Principal")]
-        public string TelefonePrincipal { get; set; }
-        
         [Display(Name = "Data de Criação")]
         public DateTime DataCadastro { get; set; }
 
         [Display(Name = "Data de Modificação")]
         public DateTime DataModificacao { get; set; }
-
     }
 }
