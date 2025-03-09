@@ -12,6 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
+SQLitePCL.Batteries.Init();
+string dbPath = Path.Combine(AppContext.BaseDirectory, "gpn_spalenza_dev.db");
+
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
