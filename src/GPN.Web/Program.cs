@@ -12,8 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenAnyIP(5000); // HTTP
-    options.ListenAnyIP(5001, listenOptions => listenOptions.UseHttps()); // HTTPS
+    options.ListenAnyIP(80); // HTTP
+    options.ListenAnyIP(81, listenOptions => listenOptions.UseHttps()); // HTTPS
+    options.ListenAnyIP(443, listenOptions => listenOptions.UseHttps()); // HTTPS
 });
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
